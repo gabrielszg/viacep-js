@@ -7,7 +7,7 @@ const tbody = document.getElementById("tbody");
 form.addEventListener("submit", event => {
     event.preventDefault();
 
-    let inputCep = form.elements.cep.value;
+    const inputCep = form.elements.cep.value;
     getCep(inputCep);
 
     form.reset();
@@ -19,7 +19,6 @@ const getCep = async (value) => {
     clearTable();
 
     const cep = value.replace(/\D/g, '');
-
     const url = `${urlViacep}${cep}/json`;
 
     if (validCep(cep)) {
@@ -46,26 +45,31 @@ function displayAlert(text, action) {
 }
 
 function addressTable(data) {
-    let array = Object.values(data);
-
-    let tr = document.createElement("tr");
+    const arrayKeys = Object.keys(data);
+    const arrayValues = Object.values(data);
+    const tr = document.createElement("tr");
     let td = document.createElement("td");
 
     clearTable();
 
-    array.map((item) => {
+    arrayValues.forEach((item, i) => {
         td = document.createElement("td");
         tbody.appendChild(tr);
         tr.appendChild(td);
+        td.setAttribute('data-title', arrayKeys[i].toUpperCase());
         td.appendChild(document.createTextNode(item));
     });
 
-    table.className = 'show-table';
+    showTable();
 }
 
 function clearTable() {
     table.className = 'hide-table';
     tbody.innerHTML = "";
+}
+
+function showTable() {
+    table.className = 'show-table';
 }
 
 function inputMask(event) {
