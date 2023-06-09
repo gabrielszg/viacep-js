@@ -28,6 +28,7 @@ body {
 
 .title {
     display: inline-flex;
+    height: 90px;
 }
 
 .title h1 {
@@ -57,12 +58,6 @@ input:focus {
 
 input::placeholder {
     color: #0071ad;
-}
-
-input[type=number]::-webkit-inner-spin-button,
-input[type=number]::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
 }
 
 button {
@@ -104,7 +99,7 @@ th:last-child {
 }
 
 td {
-    background-color: #fff;
+    background-color: transparent;
     padding: 4px 10px;
     text-align: center;
 }
@@ -121,19 +116,47 @@ td:first-child {
     visibility: visible;
 }
 
-@media screen and (max-width: 992px) {
+@media screen and (max-width: 800px) {
+    form {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    form div {
+        text-align: center;
+    }
+
     input {
         width: 50%;
     }
 
     .table-alignment {
-        max-width: 100%;
-        overflow: scroll;
+        width: 100%;
     }
 
     table {
         width: 100%;
-        margin-left: 10px;
-        margin-right: 10px;
+    }
+
+    thead {
+        display: none;
+    }
+
+    td {
+        display: flex;
+        justify-content: space-between;
+        text-align: right;
+        width: inherit !important;
+        background: linear-gradient(135deg, #0071ad, transparent);
+    }
+
+    td::before {
+        content: attr(data-title);
+        display: flex;
+        justify-content: space-between;
+        width: 35%;
+        font-weight: bold;
+        color: #fff;
     }
 }
