@@ -28,6 +28,7 @@ body {
 
 .title {
     display: inline-flex;
+    height: 90px;
 }
 
 .title h1 {
@@ -98,7 +99,7 @@ th:last-child {
 }
 
 td {
-    background-color: #fff;
+    background-color: transparent;
     padding: 4px 10px;
     text-align: center;
 }
@@ -115,11 +116,15 @@ td:first-child {
     visibility: visible;
 }
 
-@media screen and (max-width: 992px) {
+@media screen and (max-width: 800px) {
     form {
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
         justify-content: center;
+    }
+
+    form div {
+        text-align: center;
     }
 
     input {
@@ -133,7 +138,7 @@ td:first-child {
     table {
         width: 100%;
     }
-    
+
     thead {
         display: none;
     }
@@ -143,6 +148,7 @@ td:first-child {
         justify-content: space-between;
         text-align: right;
         width: inherit !important;
+        background: linear-gradient(135deg, #0071ad, transparent);
     }
 
     td::before {
@@ -152,6 +158,5 @@ td:first-child {
         width: 35%;
         font-weight: bold;
         color: #fff;
-        background-color: #0071ad;
     }
 }
