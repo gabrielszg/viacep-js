@@ -1,3 +1,52 @@
+class Cell {
+    constructor() {
+        this.tdCep = document.createElement("td");
+        this.tdLogradouro = document.createElement("td");
+        this.tdComplemento = document.createElement("td");
+        this.tdBairro = document.createElement("td");
+        this.tdLocalidade = document.createElement("td");
+        this.tdUf = document.createElement("td");
+        this.tdIbge = document.createElement("td");
+        this.tdGia = document.createElement("td");
+        this.tdDdd = document.createElement("td");
+        this.tdSiafi = document.createElement("td");
+    }
+
+    setAttribute() {
+        this.tdCep.setAttribute("data-title", "Cep");
+        this.tdLogradouro.setAttribute("data-title", "Logradouro");
+        this.tdComplemento.setAttribute("data-title", "Complemento");
+        this.tdBairro.setAttribute("data-title", "Bairro");
+        this.tdLocalidade.setAttribute("data-title", "Localidade");
+        this.tdUf.setAttribute("data-title", "UF");
+        this.tdIbge.setAttribute("data-title", "IBGE");
+        this.tdGia.setAttribute("data-title", "GIA");
+        this.tdDdd.setAttribute("data-title", "DDD");
+        this.tdSiafi.setAttribute("data-title", "SIAFI");
+    }
+}
+
+class Row {
+    constructor() {
+        this.tr = document.createElement("tr");
+    }
+
+    createRows(cell) {
+        this.tr.appendChild(cell.tdCep);
+        this.tr.appendChild(cell.tdLogradouro);
+        this.tr.appendChild(cell.tdComplemento);
+        this.tr.appendChild(cell.tdBairro);
+        this.tr.appendChild(cell.tdLocalidade);
+        this.tr.appendChild(cell.tdUf);
+        this.tr.appendChild(cell.tdIbge);
+        this.tr.appendChild(cell.tdGia);
+        this.tr.appendChild(cell.tdDdd);
+        this.tr.appendChild(cell.tdSiafi);
+
+        tbody.appendChild(this.tr);
+    }
+}
+
 const urlViacep = "https://viacep.com.br/ws";
 const alert = document.querySelector(".alert");
 const form = document.querySelector("form");
@@ -5,10 +54,10 @@ const selectUf = document.getElementById("select-uf");
 const table = document.getElementById("table");
 const tbody = document.getElementById("tbody");
 
-const uf = ["AC", "AL", "AP", "AM", "BA", "CE", "ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB",
+const ufs = ["AC", "AL", "AP", "AM", "BA", "CE", "ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB",
     "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO", "DF"];
 
-uf.forEach((item) => {
+ufs.forEach((item) => {
     const option = document.createElement("option");
     option.value = item;
     option.textContent = item;
@@ -21,28 +70,37 @@ selectUf.addEventListener("change", () => {
     optionSelected = selectUf.value;
 });
 
+const formValues = {
+    uf: "",
+    bairro: "",
+    logradouro: "",
+    isMinimumInputCharacters() {
+        return this.bairro.length < 3 || this.logradouro.length < 3 ? true : false;
+    }
+}
+
 form.addEventListener("submit", event => {
     event.preventDefault();
 
-    const inputCity = form.elements.city.value;
-    const inputPublicPlace = form.elements.publicPlace.value;
+    formValues.uf = optionSelected;
+    formValues.bairro = form.elements.city.value;
+    formValues.logradouro = form.elements.publicPlace.value;
 
-    if (inputCity.length < 3 || inputPublicPlace.length < 3)
-       return displayAlert('Mínimo de 3 caracteres!', 'danger');
+    if (formValues.isMinimumInputCharacters())
+        return displayAlert('Mínimo de 3 caracteres!', 'danger');
 
-    getCepByAddress(optionSelected, inputCity, inputPublicPlace);
+    getCepByAddress(formValues);
 
     form.reset();
 });
 
-const getCepByAddress = async (uf, city, publicPlace) => {
+const getCepByAddress = async (formValues) => {
     clearTable();
 
-    const url = `${urlViacep}/${optionSelected}/${city}/${publicPlace}/json`;
+    const url = `${urlViacep}/${formValues.uf}/${formValues.bairro}/${formValues.logradouro}/json`;
 
     const response = await fetch(url);
     const data = await response.json();
-    console.log(data);
 
     if (data.length === 0)
         displayAlert('Endereço não encontrado!', 'danger');
@@ -61,68 +119,31 @@ function displayAlert(text, action) {
 }
 
 function addressTable(data) {
-    clearTable(); 
+    clearTable();
 
-    const keys = Object.keys(data[0]);
-
-    data.forEach((item, i) => {
-        let tr = document.createElement("tr");
-        let tdCep = document.createElement("td");
-        let tdLogradouro = document.createElement("td");
-        let tdComplemento = document.createElement("td");
-        let tdBairro = document.createElement("td");
-        let tdLocalidade = document.createElement("td");
-        let tdUF = document.createElement("td");
-        let tdIBGE = document.createElement("td");
-        let tdGIA = document.createElement("td");
-        let tdDDD = document.createElement("td");
-        let tdSIAFI = document.createElement("td");
-
-        tdCep.setAttribute('data-title', keys[0]);
-        tdCep.textContent = item.cep;
-        
-        tdLogradouro.setAttribute('data-title', keys[1]);
-        tdLogradouro.textContent = item.logradouro;
-
-        tdComplemento.setAttribute('data-title', keys[2]);
-        tdComplemento.textContent = item.complemento;
-
-        tdBairro.setAttribute('data-title', keys[3]);
-        tdBairro.textContent = item.bairro;
-
-        tdLocalidade.setAttribute('data-title', keys[4]);
-        tdLocalidade.textContent = item.localidade;
-
-        tdUF.setAttribute('data-title', keys[5]);
-        tdUF.textContent = item.uf;
-
-        tdIBGE.setAttribute('data-title', keys[6]);
-        tdIBGE.textContent = item.ibge;
-
-        tdGIA.setAttribute('data-title', keys[7]);
-        tdGIA.textContent = item.gia;
-
-        tdDDD.setAttribute('data-title', keys[8]);
-        tdDDD.textContent = item.ddd;
-
-        tdSIAFI.setAttribute('data-title', keys[9]);
-        tdSIAFI.textContent = item.siafi;
-
-        tr.appendChild(tdCep);
-        tr.appendChild(tdLogradouro);
-        tr.appendChild(tdComplemento);
-        tr.appendChild(tdBairro);
-        tr.appendChild(tdLocalidade);
-        tr.appendChild(tdUF);
-        tr.appendChild(tdIBGE);
-        tr.appendChild(tdGIA);
-        tr.appendChild(tdDDD);
-        tr.appendChild(tdSIAFI);
-
-        tbody.appendChild(tr);
-    });
+    createRowsAndCells(data);
 
     showTable();
+}
+
+function createRowsAndCells(data) {
+    data.forEach((item) => {
+        const cell = new Cell();
+        cell.tdCep.textContent = item.cep;
+        cell.tdLogradouro.textContent = item.logradouro;
+        cell.tdComplemento.textContent = item.complemento;
+        cell.tdBairro.textContent = item.bairro;
+        cell.tdLocalidade.textContent = item.localidade;
+        cell.tdUf.textContent = item.uf;
+        cell.tdIbge.textContent = item.ibge;
+        cell.tdGia.textContent = item.gia;
+        cell.tdDdd.textContent = item.ddd;
+        cell.tdSiafi.textContent = item.siafi;
+        cell.setAttribute();
+
+        const row = new Row();
+        row.createRows(cell);
+    });
 }
 
 function clearTable() {
