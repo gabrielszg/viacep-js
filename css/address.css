@@ -13,6 +13,22 @@ select:first-child {
 .scroll-table {
     overflow: auto;
     margin-top: 20px;
+    scrollbar-width: thin;
+    scrollbar-color: #000 transparent;
+}
+
+.scroll-table::-webkit-scrollbar {
+    width: 5px;
+}
+
+.scroll-table::-webkit-scrollbar-track {
+    background: transparent;
+    padding: 2px;
+}
+
+.scroll-table::-webkit-scrollbar-thumb {
+    background: #262626;
+    border-radius: 2px;
 }
 
 table {
