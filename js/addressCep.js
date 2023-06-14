@@ -10,6 +10,7 @@ class Cell {
         this.tdGia = document.createElement("td");
         this.tdDdd = document.createElement("td");
         this.tdSiafi = document.createElement("td");
+        this.setAttribute();
     }
 
     setAttribute() {
@@ -23,27 +24,6 @@ class Cell {
         this.tdGia.setAttribute("data-title", "GIA");
         this.tdDdd.setAttribute("data-title", "DDD");
         this.tdSiafi.setAttribute("data-title", "SIAFI");
-    }
-}
-
-class Row {
-    constructor() {
-        this.tr = document.createElement("tr");
-    }
-
-    createRows(cell) {
-        this.tr.appendChild(cell.tdCep);
-        this.tr.appendChild(cell.tdLogradouro);
-        this.tr.appendChild(cell.tdComplemento);
-        this.tr.appendChild(cell.tdBairro);
-        this.tr.appendChild(cell.tdLocalidade);
-        this.tr.appendChild(cell.tdUf);
-        this.tr.appendChild(cell.tdIbge);
-        this.tr.appendChild(cell.tdGia);
-        this.tr.appendChild(cell.tdDdd);
-        this.tr.appendChild(cell.tdSiafi);
-
-        tbody.appendChild(this.tr);
     }
 }
 
@@ -139,11 +119,26 @@ function createRowsAndCells(data) {
         cell.tdGia.textContent = item.gia;
         cell.tdDdd.textContent = item.ddd;
         cell.tdSiafi.textContent = item.siafi;
-        cell.setAttribute();
 
-        const row = new Row();
-        row.createRows(cell);
+        createRows(cell);
     });
+}
+
+const createRows = (cell) => {
+    const tr = document.createElement("tr");
+
+    tr.appendChild(cell.tdCep);
+    tr.appendChild(cell.tdLogradouro);
+    tr.appendChild(cell.tdComplemento);
+    tr.appendChild(cell.tdBairro);
+    tr.appendChild(cell.tdLocalidade);
+    tr.appendChild(cell.tdUf);
+    tr.appendChild(cell.tdIbge);
+    tr.appendChild(cell.tdGia);
+    tr.appendChild(cell.tdDdd);
+    tr.appendChild(cell.tdSiafi);
+
+    tbody.appendChild(tr);
 }
 
 function clearTable() {
