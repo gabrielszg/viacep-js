@@ -6,12 +6,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link href="css/style.css" rel="stylesheet">
+    <link href="css/global.css" rel="stylesheet">
+    <link href="css/index.css" rel="stylesheet">
 </head>
 
 <body>
     <div class="title">
         <h1>BuscaCEP</h1>
+
         <img id="img-title" src="images/location.png" alt="location" width="100" height="100">
     </div>
 
@@ -19,7 +21,11 @@
         <p class="alert"></p>
         <div>
             <input type="text" name="cep" placeholder="Digite o CEP" maxlength="9" autofocus required>
-            <button type="submit"><i class="fa fa-search"></i>Pesquisar</button>
+
+            <button type="submit">
+                <i class="fa fa-search"></i>
+                Pesquisar
+            </button>
         </div>
     </form>
 
@@ -38,8 +44,17 @@
                 <th>SIAFI</th>
             </tr>
         </thead>
+
         <tbody id="tbody"></tbody>
     </table>
+
+    <footer>
+        <p>Se não sabe o CEP, clique no ícone abaixo e consulte pelo Endereço</p>
+
+        <a href="./addressCep.html">
+            <img src="images/swap.png" width="40" alt="troca" title="Buscar Cep pelo Endereço">
+        </a>
+    </footer>
 
     <script src="js/script.js"></script>
 </body>

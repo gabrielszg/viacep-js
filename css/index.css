@@ -1,0 +1,30 @@
+table {
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    text-align: center;
+    background: linear-gradient(3deg, #885e6e, #23a6d5);
+    width: 100%;
+}
+
+footer p {
+    margin-bottom: 0;
+}
+
+@media screen and (max-width: 800px) {
+    form div {
+        text-align: center;
+    }
+
+    input {
+        width: 50%;
+    }
+
+    .table-alignment {
+        width: 100%;
+    }
+}
