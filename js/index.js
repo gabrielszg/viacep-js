@@ -2,6 +2,7 @@ import { findAddressByCep } from "./apis/viacep.js";
 
 const alert = document.querySelector(".alert");
 const form = document.querySelector("form");
+const resetButton = document.getElementById("reset-button");
 const table = document.getElementById("table");
 const tbody = document.getElementById("tbody");
 
@@ -10,8 +11,6 @@ form.addEventListener("submit", (event) => {
 
   const inputCep = form.elements.cep.value;
   getCep(inputCep);
-
-  form.reset();
 });
 
 const validCep = (cep) => /^[0-9]{8}$/.test(cep);
@@ -76,3 +75,7 @@ function inputMask(event) {
 }
 
 form.elements.cep.addEventListener("input", inputMask);
+
+resetButton.addEventListener("click", () => {
+    clearTable();
+});
