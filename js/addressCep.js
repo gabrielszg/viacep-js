@@ -34,6 +34,7 @@ const alert = document.querySelector(".alert");
 const form = document.querySelector("form");
 const selectUf = document.getElementById("select-uf");
 const selectCity = document.getElementById("select-city");
+const resetButton = document.getElementById("reset-button");
 const table = document.getElementById("table");
 const tbody = document.getElementById("tbody");
 
@@ -63,6 +64,16 @@ const insertCitiesSelectionMenu = async (state) => {
 };
 
 const createCitySelectionMenu = (cities) => {
+  const defaultOption = selectCity.querySelector('option[value=""]');
+  
+  if (!defaultOption) {
+    const option = document.createElement("option");
+    option.value = "";
+    option.textContent = "Selecione a Cidade";
+
+    selectCity.appendChild(option);
+  }
+
   cities.forEach((item) => {
     const option = document.createElement("option");
     option.value = item.nome;
@@ -172,3 +183,11 @@ function clearTable() {
 function showTable() {
   table.className = "show-table";
 }
+
+resetButton.addEventListener("click", () => {
+  const firstOption = selectCity.options[0];
+  selectCity.innerHTML = "";
+  selectCity.appendChild(firstOption);
+  
+  clearTable();
+});

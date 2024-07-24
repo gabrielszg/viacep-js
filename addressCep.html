@@ -20,12 +20,12 @@
         <p class="alert"></p>
 
         <div>
-            <select id="select-uf" name="select-uf">
+            <select id="select-uf" name="select-uf" required>
                 <option value="" disabled selected>Selecione o Estado</option>
             </select>
 
-            <select id="select-city" name="select-city">
-                <option value="" disabled selected>Selecione o Município</option>
+            <select id="select-city" name="select-city" required>
+                <option value="" disabled selected>Selecione a Cidade</option>
             </select>
 
             <input type="text" name="publicPlace" placeholder="Digite o Logradouro" required>
@@ -33,6 +33,11 @@
             <button type="submit">
                 <i class="fa fa-search"></i>
                 Pesquisar
+            </button>
+
+            <button id="reset-button" type="reset">
+                <i class="fa fa-trash"></i>
+                limpar
             </button>
 
             <a href="./index.html">
