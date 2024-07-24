@@ -44,6 +44,7 @@ const insertStatesSelectionMenu = async () => {
 };
 
 const createStateSelectionMenu = (states) => {
+  states.sort((a, b) => a.nome.localeCompare(b.nome));
   states.forEach((item) => {
     const option = document.createElement("option");
     option.value = item.sigla;
