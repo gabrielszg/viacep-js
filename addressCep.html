@@ -24,7 +24,10 @@
                 <option value="" disabled selected>Selecione o Estado</option>
             </select>
 
-            <input type="text" name="city" placeholder="Digite o nome da Cidade" required>
+            <select id="select-city" name="select-city">
+                <option value="" disabled selected>Selecione o Município</option>
+            </select>
+
             <input type="text" name="publicPlace" placeholder="Digite o Logradouro" required>
 
             <button type="submit">
@@ -62,7 +65,7 @@
         </table>
     </div>
 
-    <script src="js/addressCep.js"></script>
+    <script type="module" src="js/addressCep.js"></script>
 </body>
 
 </html>
