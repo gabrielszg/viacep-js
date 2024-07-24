@@ -80,11 +80,6 @@ selectUf.addEventListener("change", async () => {
   insertCitiesSelectionMenu(selectedState);
 });
 
-let selectedCity;
-selectCity.addEventListener("change", () => {
-  selectedCity = selectCity.value;
-});
-
 const formValues = {
   uf: "",
   bairro: "",
@@ -98,15 +93,13 @@ form.addEventListener("submit", (event) => {
   event.preventDefault();
 
   formValues.uf = selectedState;
-  formValues.bairro = selectedCity;
+  formValues.bairro = selectCity.value;
   formValues.logradouro = form.elements.publicPlace.value;
 
   if (formValues.isMinimumInputCharacters())
     return displayAlert("Mínimo de 3 caracteres!", "danger");
 
   getCepByAddress(formValues);
-
-  form.reset();
 });
 
 const getCepByAddress = async (formValues) => {
