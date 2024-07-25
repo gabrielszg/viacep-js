@@ -1,8 +1,8 @@
 import { findAllStates, findAllCitiesByState } from "./apis/ibge.js";
 import { findCepByAddress } from "./apis/viacep.js";
 import { Cell } from "./components/table.js";
+import { displayAlert } from "./utils/utils.js";
 
-const alert = document.querySelector(".alert");
 const form = document.querySelector("form");
 const selectUf = document.getElementById("select-uf");
 const selectCity = document.getElementById("select-city");
@@ -97,16 +97,6 @@ const getCepByAddress = async (formValues) => {
   if (data.length === 0) displayAlert("Endereço não encontrado!", "danger");
   else addressTable(data);
 };
-
-function displayAlert(text, action) {
-  alert.textContent = text;
-  alert.classList.add(`alert-${action}`);
-
-  setTimeout(() => {
-    alert.textContent = "";
-    alert.classList.remove(`alert-${action}`);
-  }, 2000);
-}
 
 function addressTable(data) {
   clearTable();
