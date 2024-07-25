@@ -1,6 +1,6 @@
 import { findAddressByCep } from "./apis/viacep.js";
+import { displayAlert } from "./utils/utils.js";
 
-const alert = document.querySelector(".alert");
 const form = document.querySelector("form");
 const resetButton = document.getElementById("reset-button");
 const table = document.getElementById("table");
@@ -30,16 +30,6 @@ const getCep = async (value) => {
     displayAlert("CEP incorreto!", "danger");
   }
 };
-
-function displayAlert(text, action) {
-  alert.textContent = text;
-  alert.classList.add(`alert-${action}`);
-
-  setTimeout(() => {
-    alert.textContent = "";
-    alert.classList.remove(`alert-${action}`);
-  }, 2000);
-}
 
 function addressTable(adresses) {
   const arrayKeys = Object.keys(adresses);
