@@ -1,5 +1,5 @@
-import { findAddressByCep } from "./apis/viacep.js";
-import { displayAlert } from "./utils/utils.js";
+import { findAddressByCep } from "../apis/viacep.js";
+import { displayAlert } from "../utils/utils.js";
 
 const form = document.querySelector("form");
 const resetButton = document.getElementById("reset-button");

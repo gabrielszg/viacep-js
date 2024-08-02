@@ -1,7 +1,7 @@
-import { findAllStates, findAllCitiesByState } from "./apis/ibge.js";
-import { findCepByAddress } from "./apis/viacep.js";
-import { Cell } from "./components/table.js";
-import { displayAlert } from "./utils/utils.js";
+import { findAllStates, findAllCitiesByState } from "../apis/ibge.js";
+import { findCepByAddress } from "../apis/viacep.js";
+import { Cell } from "../components/addressCep/table.js";
+import { displayAlert } from "../utils/utils.js";
 
 const form = document.querySelector("form");
 const selectUf = document.getElementById("select-uf");
