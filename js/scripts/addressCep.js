@@ -94,7 +94,7 @@ const getCepByAddress = async (formValues) => {
     formValues.logradouro
   );
 
-  if (data.length === 0) displayAlert("Endereço não encontrado!", "danger");
+  if (adresses.length === 0) displayAlert("Endereço não encontrado!", "danger");
   else addressTable(adresses);
 };
 
