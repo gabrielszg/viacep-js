@@ -1,5 +1,6 @@
 import { findAddressByCep } from "../apis/viacep.js";
 import { displayAlert } from "../utils/utils.js";
+import { Table } from "../components/index/table.js";
 
 const form = document.querySelector("form");
 const resetButton = document.getElementById("reset-button");
@@ -21,31 +22,21 @@ const getCep = async (value) => {
   const cep = value.replace(/\D/g, "");
 
   if (validCep(cep)) {
-    const adresses = await findAddressByCep(cep); 
+    const address = await findAddressByCep(cep); 
 
-    if (adresses.hasOwnProperty("erro"))
+    if (address.hasOwnProperty("erro"))
       displayAlert("CEP não encontrado!", "danger");
-    else addressTable(adresses);
+    else addressTable(address);
   } else {
     displayAlert("CEP incorreto!", "danger");
   }
 };
 
-function addressTable(adresses) {
-  const arrayKeys = Object.keys(adresses);
-  const arrayValues = Object.values(adresses);
-  const tr = document.createElement("tr");
-  let td = document.createElement("td");
-
+function addressTable(address) {
   clearTable();
 
-  arrayValues.forEach((item, i) => {
-    td = document.createElement("td");
-    tbody.appendChild(tr);
-    tr.appendChild(td);
-    td.setAttribute("data-title", arrayKeys[i].toUpperCase());
-    td.appendChild(document.createTextNode(item));
-  });
+  const tbl = new Table(address);
+  tbl.createRowsAndCells(tbody);
 
   showTable();
 }
