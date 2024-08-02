@@ -1,6 +1,6 @@
 import { findAllStates, findAllCitiesByState } from "../apis/ibge.js";
 import { findCepByAddress } from "../apis/viacep.js";
-import { Cell } from "../components/addressCep/table.js";
+import { Table } from "../components/addressCep/table.js";
 import { displayAlert } from "../utils/utils.js";
 
 const form = document.querySelector("form");
@@ -88,58 +88,24 @@ form.addEventListener("submit", (event) => {
 const getCepByAddress = async (formValues) => {
   clearTable();
 
-  const data = await findCepByAddress(
+  const adresses = await findCepByAddress(
     formValues.uf,
     formValues.bairro,
     formValues.logradouro
   );
 
   if (data.length === 0) displayAlert("Endereço não encontrado!", "danger");
-  else addressTable(data);
+  else addressTable(adresses);
 };
 
-function addressTable(data) {
+function addressTable(adresses) {
   clearTable();
 
-  createRowsAndCells(data);
+  const tbl = new Table();
+  tbl.createRowsAndCells(adresses, tbody);
 
   showTable();
 }
-
-function createRowsAndCells(data) {
-  data.forEach((item) => {
-    const cell = new Cell();
-    cell.tdCep.textContent = item.cep;
-    cell.tdLogradouro.textContent = item.logradouro;
-    cell.tdComplemento.textContent = item.complemento;
-    cell.tdBairro.textContent = item.bairro;
-    cell.tdLocalidade.textContent = item.localidade;
-    cell.tdUf.textContent = item.uf;
-    cell.tdIbge.textContent = item.ibge;
-    cell.tdGia.textContent = item.gia;
-    cell.tdDdd.textContent = item.ddd;
-    cell.tdSiafi.textContent = item.siafi;
-
-    createRows(cell);
-  });
-}
-
-const createRows = (cell) => {
-  const tr = document.createElement("tr");
-
-  tr.appendChild(cell.tdCep);
-  tr.appendChild(cell.tdLogradouro);
-  tr.appendChild(cell.tdComplemento);
-  tr.appendChild(cell.tdBairro);
-  tr.appendChild(cell.tdLocalidade);
-  tr.appendChild(cell.tdUf);
-  tr.appendChild(cell.tdIbge);
-  tr.appendChild(cell.tdGia);
-  tr.appendChild(cell.tdDdd);
-  tr.appendChild(cell.tdSiafi);
-
-  tbody.appendChild(tr);
-};
 
 function clearTable() {
   table.className = "hide-table";
