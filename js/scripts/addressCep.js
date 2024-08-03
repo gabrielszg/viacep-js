@@ -1,6 +1,6 @@
 import { findAllStates, findAllCitiesByState } from "../apis/ibge.js";
 import { findCepByAddress } from "../apis/viacep.js";
-import { Table } from "../components/addressCep/table.js";
+import { Table } from "../components/table/table.js";
 import { displayAlert } from "../utils/utils.js";
 
 const form = document.querySelector("form");
@@ -101,8 +101,8 @@ const getCepByAddress = async (formValues) => {
 function addressTable(adresses) {
   clearTable();
 
-  const tbl = new Table();
-  tbl.createRowsAndCells(adresses, tbody);
+  const tbl = new Table(null, adresses);
+  tbl.createRowsAndColumns(tbody);
 
   showTable();
 }

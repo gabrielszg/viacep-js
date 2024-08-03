@@ -1,6 +1,7 @@
 export class Table {
-  constructor(address) {
+  constructor(address = null, adresses = null) {
     this.address = address;
+    this.adresses = adresses;
     this.tdCep = document.createElement("td");
     this.tdLogradouro = document.createElement("td");
     this.tdComplemento = document.createElement("td");
@@ -15,7 +16,15 @@ export class Table {
   }
 
   #setAttribute() {
-    const arrayKeys = Object.keys(this.address);
+    let arrayKeys; 
+    if (this.address !== null) {
+      arrayKeys = Object.keys(this.address);
+    }
+
+    if (this.adresses !== null) {
+      arrayKeys = Object.keys(this.adresses[0]);
+    }
+    
     this.tdCep.setAttribute("data-title", arrayKeys[0]);
     this.tdLogradouro.setAttribute("data-title", arrayKeys[1]);
     this.tdComplemento.setAttribute("data-title", arrayKeys[2]);
@@ -28,7 +37,17 @@ export class Table {
     this.tdSiafi.setAttribute("data-title", arrayKeys[9]);
   }
 
-  createRowsAndCells(htmlTbodyElement) {
+  createRowsAndColumns(htmlTbodyElement) {
+    if (this.address !== null) {
+      this.#createRowsAndColumnsByAddress(htmlTbodyElement);
+    } else if (this.adresses !== null) {
+      this.#createRowsAndColumnsByAddresses(htmlTbodyElement);
+    } else {
+      throw console.error("attributes are null");
+    }
+  }
+
+  #createRowsAndColumnsByAddress(htmlTbodyElement) {
     this.tdCep.textContent = this.address.cep;
     this.tdLogradouro.textContent = this.address.logradouro;
     this.tdComplemento.textContent = this.address.complemento;
@@ -41,6 +60,24 @@ export class Table {
     this.tdSiafi.textContent = this.address.siafi;
 
     this.#createRows(htmlTbodyElement);
+  }
+
+  #createRowsAndColumnsByAddresses(htmlTbodyElement) {
+    this.adresses.forEach((item) => {
+      const cell = new Table(null, this.adresses);
+      cell.tdCep.textContent = item.cep;
+      cell.tdLogradouro.textContent = item.logradouro;
+      cell.tdComplemento.textContent = item.complemento;
+      cell.tdBairro.textContent = item.bairro;
+      cell.tdLocalidade.textContent = item.localidade;
+      cell.tdUf.textContent = item.uf;
+      cell.tdIbge.textContent = item.ibge;
+      cell.tdGia.textContent = item.gia;
+      cell.tdDdd.textContent = item.ddd;
+      cell.tdSiafi.textContent = item.siafi;
+
+      cell.#createRows(htmlTbodyElement);
+    });
   }
 
   #createRows(htmlTbodyElement) {

@@ -1,6 +1,6 @@
 import { findAddressByCep } from "../apis/viacep.js";
 import { displayAlert } from "../utils/utils.js";
-import { Table } from "../components/index/table.js";
+import { Table } from "../components/table/table.js";
 
 const form = document.querySelector("form");
 const resetButton = document.getElementById("reset-button");
@@ -35,8 +35,8 @@ const getCep = async (value) => {
 function addressTable(address) {
   clearTable();
 
-  const tbl = new Table(address);
-  tbl.createRowsAndCells(tbody);
+  const tbl = new Table(address, null);
+  tbl.createRowsAndColumns(tbody);
 
   showTable();
 }
