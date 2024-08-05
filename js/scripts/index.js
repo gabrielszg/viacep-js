@@ -1,5 +1,10 @@
 import { findAddressByCep } from "../apis/viacep.js";
-import { displayAlert } from "../utils/utils.js";
+import {
+  displayAlert,
+  validCep,
+  clearTable,
+  showTable,
+} from "../utils/utils.js";
 import { Table } from "../components/table/table.js";
 
 const form = document.querySelector("form");
@@ -14,15 +19,13 @@ form.addEventListener("submit", (event) => {
   getCep(inputCep);
 });
 
-const validCep = (cep) => /^[0-9]{8}$/.test(cep);
-
 const getCep = async (value) => {
-  clearTable();
+  clearTable(table);
 
   const cep = value.replace(/\D/g, "");
 
   if (validCep(cep)) {
-    const address = await findAddressByCep(cep); 
+    const address = await findAddressByCep(cep);
 
     if (address.hasOwnProperty("erro"))
       displayAlert("CEP não encontrado!", "danger");
@@ -32,31 +35,22 @@ const getCep = async (value) => {
   }
 };
 
-function addressTable(address) {
-  clearTable();
+const addressTable = (address) => {
+  clearTable(table);
 
   const tbl = new Table(address, null);
   tbl.createRowsAndColumns(tbody);
 
-  showTable();
-}
+  showTable(table);
+};
 
-function clearTable() {
-  table.className = "hide-table";
-  tbody.innerHTML = "";
-}
-
-function showTable() {
-  table.className = "show-table";
-}
-
-function inputMask(event) {
+const inputMask = (event) => {
   const cep = event.target;
   cep.value = cep.value.replace(/^(\d{5})(\d)/, "$1-$2");
-}
+};
 
 form.elements.cep.addEventListener("input", inputMask);
 
 resetButton.addEventListener("click", () => {
-    clearTable();
+  clearTable(table);
 });

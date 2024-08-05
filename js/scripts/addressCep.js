@@ -1,7 +1,7 @@
 import { findAllStates, findAllCitiesByState } from "../apis/ibge.js";
 import { findCepByAddress } from "../apis/viacep.js";
 import { Table } from "../components/table/table.js";
-import { displayAlert } from "../utils/utils.js";
+import { displayAlert, clearTable, showTable } from "../utils/utils.js";
 
 const form = document.querySelector("form");
 const selectUf = document.getElementById("select-uf");
@@ -86,7 +86,7 @@ form.addEventListener("submit", (event) => {
 });
 
 const getCepByAddress = async (formValues) => {
-  clearTable();
+  clearTable(table);
 
   const adresses = await findCepByAddress(
     formValues.uf,
@@ -99,21 +99,12 @@ const getCepByAddress = async (formValues) => {
 };
 
 function addressTable(adresses) {
-  clearTable();
+  clearTable(table);
 
   const tbl = new Table(null, adresses);
   tbl.createRowsAndColumns(tbody);
 
-  showTable();
-}
-
-function clearTable() {
-  table.className = "hide-table";
-  tbody.innerHTML = "";
-}
-
-function showTable() {
-  table.className = "show-table";
+  showTable(table);
 }
 
 resetButton.addEventListener("click", () => {
@@ -121,5 +112,5 @@ resetButton.addEventListener("click", () => {
   selectCity.innerHTML = "";
   selectCity.appendChild(firstOption);
 
-  clearTable();
+  clearTable(table);
 });
