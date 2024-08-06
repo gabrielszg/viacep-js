@@ -12,12 +12,17 @@ const resetButton = document.getElementById("reset-button");
 const table = document.getElementById("table");
 const tbody = document.getElementById("tbody");
 
-form.addEventListener("submit", (event) => {
+const inputMask = (event) => {
+  const cep = event.target;
+  cep.value = cep.value.replace(/^(\d{5})(\d)/, "$1-$2");
+};
+
+const submitForm = (event) => {
   event.preventDefault();
 
   const inputCep = form.elements.cep.value;
   getCep(inputCep);
-});
+};
 
 const getCep = async (value) => {
   clearTable(table);
@@ -44,12 +49,8 @@ const addressTable = (address) => {
   showTable(table);
 };
 
-const inputMask = (event) => {
-  const cep = event.target;
-  cep.value = cep.value.replace(/^(\d{5})(\d)/, "$1-$2");
-};
-
 form.elements.cep.addEventListener("input", inputMask);
+form.addEventListener("submit", submitForm);
 
 resetButton.addEventListener("click", () => {
   clearTable(table);
