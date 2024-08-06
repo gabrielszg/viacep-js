@@ -9,6 +9,7 @@ const selectCity = document.getElementById("select-city");
 const resetButton = document.getElementById("reset-button");
 const table = document.getElementById("table");
 const tbody = document.getElementById("tbody");
+let selectedState;
 
 const insertStatesSelectionMenu = async () => {
   const states = await findAllStates();
@@ -26,8 +27,6 @@ const createStateSelectionMenu = (states) => {
     selectUf.appendChild(option);
   });
 };
-
-insertStatesSelectionMenu();
 
 const insertCitiesSelectionMenu = async (state) => {
   const cities = await findAllCitiesByState(state);
@@ -55,14 +54,6 @@ const createCitySelectionMenu = (cities) => {
   });
 };
 
-var selectedState;
-selectUf.addEventListener("change", async () => {
-  selectedState = selectUf.value;
-  selectCity.innerHTML = "";
-
-  insertCitiesSelectionMenu(selectedState);
-});
-
 const formValues = {
   uf: "",
   bairro: "",
@@ -71,19 +62,6 @@ const formValues = {
     return this.logradouro.length < 3 ? true : false;
   },
 };
-
-form.addEventListener("submit", (event) => {
-  event.preventDefault();
-
-  formValues.uf = selectedState;
-  formValues.bairro = selectCity.value;
-  formValues.logradouro = form.elements.publicPlace.value;
-
-  if (formValues.isMinimumInputCharacters())
-    return displayAlert("Mínimo de 3 caracteres!", "danger");
-
-  getCepByAddress(formValues);
-});
 
 const getCepByAddress = async (formValues) => {
   clearTable(table);
@@ -98,14 +76,36 @@ const getCepByAddress = async (formValues) => {
   else addressTable(adresses);
 };
 
-function addressTable(adresses) {
+const addressTable = (adresses) => {
   clearTable(table);
 
   const tbl = new Table(null, adresses);
   tbl.createRowsAndColumns(tbody);
 
   showTable(table);
-}
+};
+
+insertStatesSelectionMenu();
+
+selectUf.addEventListener("change", async () => {
+  selectedState = selectUf.value;
+  selectCity.innerHTML = "";
+
+  insertCitiesSelectionMenu(selectedState);
+});
+
+form.addEventListener("submit", (event) => {
+  event.preventDefault();
+
+  formValues.uf = selectedState;
+  formValues.bairro = selectCity.value;
+  formValues.logradouro = form.elements.publicPlace.value;
+
+  if (formValues.isMinimumInputCharacters())
+    return displayAlert("Mínimo de 3 caracteres!", "danger");
+
+  getCepByAddress(formValues);
+});
 
 resetButton.addEventListener("click", () => {
   const firstOption = selectCity.options[0];
