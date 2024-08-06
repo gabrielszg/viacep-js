@@ -118,6 +118,16 @@ td:first-child {
         justify-content: center;
     }
 
+    input {
+        height: 35px;
+        font-size: 1.3rem;
+    }
+
+    button {
+        height: 45px;
+        font-size: 1.3rem;
+    }
+
     table {
         width: 100%;
     }

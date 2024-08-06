@@ -25,7 +25,11 @@ footer p {
     }
 
     input {
-        width: 50%;
+        width: 90vw;
+    }
+
+    button {
+        margin: 10px;
     }
 
     .table-alignment {
